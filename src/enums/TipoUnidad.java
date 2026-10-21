@@ -2,7 +2,7 @@ package enums;
 
 /**
  * Tipos de unidad de la Biblioteca FISEI.
- * Jerarquía permitida: BIBLIOTECA -> AREA -> ESTANTE.
+ * Jerarquia permitida: BIBLIOTECA -> AREA -> ESTANTE.
  */
 public enum TipoUnidad {
     BIBLIOTECA,

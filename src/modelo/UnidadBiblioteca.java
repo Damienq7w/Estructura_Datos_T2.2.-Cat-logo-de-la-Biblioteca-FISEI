@@ -3,8 +3,8 @@ package modelo;
 import enums.TipoUnidad;
 
 /**
- * Unidad de la biblioteca: la biblioteca, un área o un estante.
- * El código se guarda siempre en mayúsculas.
+ * Unidad de la biblioteca: la biblioteca, un area o un estante.
+ * El codigo se guarda siempre en mayusculas.
  */
 public class UnidadBiblioteca {
 
@@ -14,7 +14,7 @@ public class UnidadBiblioteca {
 
     public UnidadBiblioteca(String codigo, String nombre, TipoUnidad tipo) {
         if (codigo == null || codigo.trim().isEmpty()) {
-            throw new IllegalArgumentException("El código de la unidad no puede estar vacío.");
+            throw new IllegalArgumentException("El codigo de la unidad no puede estar vacio.");
         }
         if (tipo == null) {
             throw new IllegalArgumentException("El tipo de la unidad es obligatorio.");
@@ -38,7 +38,7 @@ public class UnidadBiblioteca {
 
     private static String validarNombre(String nombre) {
         if (nombre == null || nombre.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre de la unidad no puede estar vacío.");
+            throw new IllegalArgumentException("El nombre de la unidad no puede estar vacio.");
         }
         return nombre.trim();
     }

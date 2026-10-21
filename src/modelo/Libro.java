@@ -1,7 +1,7 @@
 package modelo;
 
 /**
- * Libro del catálogo. El código es la clave del ABB, por eso no tiene setter.
+ * Libro del catalogo. El codigo es la clave del ABB, por eso no tiene setter.
  */
 public class Libro {
 
@@ -15,10 +15,10 @@ public class Libro {
 
     public Libro(int codigo, String titulo, String autor, int anio) {
         if (codigo <= 0) {
-            throw new IllegalArgumentException("El código debe ser un entero mayor que 0.");
+            throw new IllegalArgumentException("El codigo debe ser un entero mayor que 0.");
         }
         this.codigo = codigo;
-        this.titulo = validarTexto(titulo, "título");
+        this.titulo = validarTexto(titulo, "titulo");
         this.autor = validarTexto(autor, "autor");
         this.anio = validarAnio(anio);
     }
@@ -32,7 +32,7 @@ public class Libro {
     }
 
     public void setTitulo(String titulo) {
-        this.titulo = validarTexto(titulo, "título");
+        this.titulo = validarTexto(titulo, "titulo");
     }
 
     public String getAutor() {
@@ -54,14 +54,14 @@ public class Libro {
     private static int validarAnio(int anio) {
         if (anio < ANIO_MINIMO || anio > ANIO_MAXIMO) {
             throw new IllegalArgumentException(
-                    "El año debe estar entre " + ANIO_MINIMO + " y " + ANIO_MAXIMO + ".");
+                    "El anio debe estar entre " + ANIO_MINIMO + " y " + ANIO_MAXIMO + ".");
         }
         return anio;
     }
 
     private static String validarTexto(String valor, String campo) {
         if (valor == null || valor.trim().isEmpty()) {
-            throw new IllegalArgumentException("El " + campo + " no puede estar vacío.");
+            throw new IllegalArgumentException("El " + campo + " no puede estar vacio.");
         }
         return valor.trim();
     }

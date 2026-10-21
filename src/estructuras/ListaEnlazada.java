@@ -44,10 +44,10 @@ public class ListaEnlazada<T> implements Iterable<T> {
         tamanio++;
     }
 
-    /** Devuelve el dato de la posición indicada (desde 0). O(n): camina desde la cabeza. */
+    /** Devuelve el dato de la posicion indicada (desde 0). O(n): camina desde la cabeza. */
     public T obtener(int indice) {
         if (indice < 0 || indice >= tamanio) {
-            throw new IndexOutOfBoundsException("Índice fuera de rango: " + indice);
+            throw new IndexOutOfBoundsException("Indice fuera de rango: " + indice);
         }
         Nodo<T> actual = cabeza;
         for (int i = 0; i < indice; i++) {
@@ -56,17 +56,17 @@ public class ListaEnlazada<T> implements Iterable<T> {
         return actual.getDato();
     }
 
-    /** Primer dato de la lista, o null si está vacía. O(1). */
+    /** Primer dato de la lista, o null si esta vacia. O(1). */
     public T obtenerPrimero() {
         return cabeza == null ? null : cabeza.getDato();
     }
 
-    /** Último dato de la lista, o null si está vacía. O(1). */
+    /** Ultimo dato de la lista, o null si esta vacia. O(1). */
     public T obtenerUltimo() {
         return cola == null ? null : cola.getDato();
     }
 
-    /** Indica si el dato está en la lista (usa equals). O(n). */
+    /** Indica si el dato esta en la lista (usa equals). O(n). */
     public boolean contiene(T dato) {
         for (T elemento : this) {
             if (elemento == null ? dato == null : elemento.equals(dato)) {
@@ -77,7 +77,7 @@ public class ListaEnlazada<T> implements Iterable<T> {
     }
 
     /**
-     * Elimina la primera aparición del dato con dos punteros (anterior y actual).
+     * Elimina la primera aparicion del dato con dos punteros (anterior y actual).
      * Actualiza cabeza y cola si hace falta. O(n).
      */
     public boolean eliminar(T dato) {
@@ -111,7 +111,7 @@ public class ListaEnlazada<T> implements Iterable<T> {
         return tamanio == 0;
     }
 
-    /** Iterador con clase anónima: recuerda en que nodo va. O(1) por paso. */
+    /** Iterador con clase anonima: recuerda en que nodo va. O(1) por paso. */
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
