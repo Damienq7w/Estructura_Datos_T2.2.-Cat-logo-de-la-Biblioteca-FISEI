@@ -5,9 +5,9 @@ import estructuras.ListaEnlazada;
 import modelo.UnidadBiblioteca;
 
 /**
- * Nodo del árbol general n-ario.
+ * Nodo del arbol general n-ario.
  * Los hijos se guardan en la lista enlazada propia.
- * Solo los estantes tienen catálogo (ABB de libros).
+ * Solo los estantes tienen catalogo (ABB de libros).
  */
 public class NodoUnidad {
 
@@ -45,7 +45,7 @@ public class NodoUnidad {
         return hijos.estaVacia();
     }
 
-    /** Devuelve el catálogo del estante, o null si la unidad no es un ESTANTE. */
+    /** Devuelve el catalogo del estante, o null si la unidad no es un ESTANTE. */
     public CatalogoABB getCatalogo() {
         return catalogo;
     }

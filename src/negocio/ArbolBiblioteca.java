@@ -4,9 +4,9 @@ import enums.TipoUnidad;
 import modelo.UnidadBiblioteca;
 
 /**
- * Árbol general n-ario que representa la jerarquía de la Biblioteca FISEI.
+ * Arbol general n-ario que representa la jerarquia de la Biblioteca FISEI.
  * Todas las operaciones son recursivas: caso base, procesar el nodo y llamada recursiva a los hijos.
- * Los hijos de cada nodo están en una ListaEnlazada propia y se recorren con for-each.
+ * Los hijos de cada nodo estan en una ListaEnlazada propia y se recorren con for-each.
  */
 public class ArbolBiblioteca {
 
@@ -14,7 +14,7 @@ public class ArbolBiblioteca {
 
     public ArbolBiblioteca(UnidadBiblioteca raiz) {
         if (raiz == null || raiz.getTipo() != TipoUnidad.BIBLIOTECA) {
-            throw new IllegalArgumentException("La raíz debe ser una unidad de tipo BIBLIOTECA.");
+            throw new IllegalArgumentException("La raiz debe ser una unidad de tipo BIBLIOTECA.");
         }
         this.raiz = new NodoUnidad(raiz);
     }
@@ -27,8 +27,8 @@ public class ArbolBiblioteca {
 
     /**
      * Agrega una unidad como hija de codigoPadre.
-     * Devuelve false si el padre no existe, si el código ya existe o si se rompe
-     * la jerarquía BIBLIOTECA -> AREA -> ESTANTE.
+     * Devuelve false si el padre no existe, si el codigo ya existe o si se rompe
+     * la jerarquia BIBLIOTECA -> AREA -> ESTANTE.
      */
     public boolean agregar(String codigoPadre, UnidadBiblioteca nueva) {
         if (codigoPadre == null || nueva == null) {
@@ -50,7 +50,7 @@ public class ArbolBiblioteca {
 
     // ------------------------------------------------------------------- buscar
 
-    /** Busca una unidad por código sin distinguir mayúsculas. Devuelve null si no existe. */
+    /** Busca una unidad por codigo sin distinguir mayusculas. Devuelve null si no existe. */
     public NodoUnidad buscar(String codigo) {
         if (codigo == null) {
             return null;
@@ -76,7 +76,7 @@ public class ArbolBiblioteca {
 
     // ------------------------------------------------------------------- altura
 
-    /** Altura del árbol en aristas. Un árbol con solo la raíz tiene altura 0. */
+    /** Altura del arbol en aristas. Un arbol con solo la raiz tiene altura 0. */
     public int altura() {
         return altura(raiz);
     }
@@ -94,7 +94,7 @@ public class ArbolBiblioteca {
 
     // -------------------------------------------------------------------- hojas
 
-    /** Número de unidades sin hijos. */
+    /** Numero de unidades sin hijos. */
     public int contarHojas() {
         return contarHojas(raiz);
     }
@@ -112,7 +112,7 @@ public class ArbolBiblioteca {
 
     // -------------------------------------------------------------------- nivel
 
-    /** Nivel de la unidad (raíz = 0). Devuelve -1 si no existe. */
+    /** Nivel de la unidad (raiz = 0). Devuelve -1 si no existe. */
     public int nivel(String codigo) {
         if (codigo == null) {
             return -1;
@@ -133,9 +133,9 @@ public class ArbolBiblioteca {
         return -1;
     }
 
-    // ---------------------------------------------------------------- jerarquía
+    // ---------------------------------------------------------------- jerarquia
 
-    /** Jerarquía en preorden con 2 espacios por nivel. */
+    /** Jerarquia en preorden con 2 espacios por nivel. */
     public String mostrarJerarquia() {
         StringBuilder sb = new StringBuilder();
         mostrarJerarquia(raiz, 0, sb);

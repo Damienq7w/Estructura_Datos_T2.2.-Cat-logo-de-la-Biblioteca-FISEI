@@ -5,7 +5,7 @@ import estructuras.ListaEnlazada;
 import modelo.Libro;
 
 /**
- * Árbol Binario de Búsqueda (ABB) de libros ordenado por código.
+ * Arbol Binario de Busqueda (ABB) de libros ordenado por codigo.
  * Menores a la izquierda, mayores a la derecha y sin repetidos.
  * Todas las operaciones son recursivas.
  */
@@ -23,7 +23,7 @@ public class CatalogoABB {
 
     // ================================================================ insertar
 
-    /** Inserta un libro por su código. Devuelve false si el código ya existe. */
+    /** Inserta un libro por su codigo. Devuelve false si el codigo ya existe. */
     public boolean insertar(Libro libro) {
         if (libro == null) {
             throw new IllegalArgumentException("El libro no puede ser null.");
@@ -37,7 +37,7 @@ public class CatalogoABB {
 
     private NodoLibro insertar(NodoLibro nodo, Libro libro) {
         if (nodo == null) {
-            return new NodoLibro(libro);                   // caso base: lugar vacío
+            return new NodoLibro(libro);                   // caso base: lugar vacio
         }
         if (libro.getCodigo() < nodo.getDato().getCodigo()) {
             nodo.setIzquierdo(insertar(nodo.getIzquierdo(), libro));
@@ -49,7 +49,7 @@ public class CatalogoABB {
 
     // ================================================================== buscar
 
-    /** Busca un libro por código. Devuelve null si no existe. */
+    /** Busca un libro por codigo. Devuelve null si no existe. */
     public Libro buscar(int codigo) {
         NodoLibro nodo = buscarNodo(raiz, codigo);
         return nodo == null ? null : nodo.getDato();
@@ -70,7 +70,7 @@ public class CatalogoABB {
 
     // ================================================================== contar
 
-    /** Número de libros del catálogo. */
+    /** Numero de libros del catalogo. */
     public int contar() {
         return contar(raiz);
     }
@@ -115,8 +115,8 @@ public class CatalogoABB {
 
     /**
      * Traza del recorrido:
-     * "entra X" al entrar al nodo, "VISITA X" al procesarlo y "null -> regresa" en un hijo vacío,
-     * con 2 espacios por nivel. La última línea es "Secuencia TIPO: ...".
+     * "entra X" al entrar al nodo, "VISITA X" al procesarlo y "null -> regresa" en un hijo vacio,
+     * con 2 espacios por nivel. La ultima linea es "Secuencia TIPO: ...".
      */
     public String trazaRecorrido(TipoRecorrido tipo) {
         if (tipo == null) {
@@ -159,7 +159,7 @@ public class CatalogoABB {
 
     // =============================================================== modificar
 
-    /** Modifica título, autor y año (el código no cambia). Devuelve false si no existe. */
+    /** Modifica titulo, autor y anio (el codigo no cambia). Devuelve false si no existe. */
     public boolean modificar(int codigo, String titulo, String autor, int anio) {
         NodoLibro nodo = buscarNodo(raiz, codigo);
         if (nodo == null) {
@@ -204,7 +204,7 @@ public class CatalogoABB {
             if (nodo.getDerecho() == null) {
                 return nodo.getIzquierdo();
             }
-            // Caso 3 (dos hijos): sucesor inorden = menor del subárbol derecho.
+            // Caso 3 (dos hijos): sucesor inorden = menor del subarbol derecho.
             Libro sucesor = minimo(nodo.getDerecho());
             nodo.setDato(sucesor);
             nodo.setDerecho(eliminar(nodo.getDerecho(), sucesor.getCodigo()));
@@ -214,8 +214,92 @@ public class CatalogoABB {
 
     private Libro minimo(NodoLibro nodo) {
         if (nodo.getIzquierdo() == null) {
-            return nodo.getDato();                         // caso base: el más a la izquierda
+            return nodo.getDato();                         // caso base: el mas a la izquierda
         }
         return minimo(nodo.getIzquierdo());
+    }
+
+    // =================================================================== RETOS
+
+    /** Cuenta los codigos entre a y b (incluidos), con poda de ramas que no pueden aportar. */
+    public int contarEnRango(int a, int b) {
+        return contarEnRango(raiz, Math.min(a, b), Math.max(a, b));
+    }
+
+    private int contarEnRango(NodoLibro nodo, int a, int b) {
+        if (nodo == null) {
+            return 0;                                      // caso base
+        }
+        int codigo = nodo.getDato().getCodigo();
+        if (codigo < a) {
+            return contarEnRango(nodo.getDerecho(), a, b);    // poda: la izquierda es aun menor
+        }
+        if (codigo > b) {
+            return contarEnRango(nodo.getIzquierdo(), a, b);  // poda: la derecha es aun mayor
+        }
+        return 1 + contarEnRango(nodo.getIzquierdo(), a, b) + contarEnRango(nodo.getDerecho(), a, b);
+    }
+
+    /** Codigos visitados desde la raiz hasta el libro (o hasta donde termina la busqueda). */
+    public ListaEnlazada<Integer> caminoBusqueda(int codigo) {
+        ListaEnlazada<Integer> camino = new ListaEnlazada<>();
+        caminoBusqueda(raiz, codigo, camino);
+        return camino;
+    }
+
+    private void caminoBusqueda(NodoLibro nodo, int codigo, ListaEnlazada<Integer> camino) {
+        if (nodo == null) {
+            return;                                        // caso base: no hay mas camino
+        }
+        int actual = nodo.getDato().getCodigo();
+        camino.insertar(actual);
+        if (codigo == actual) {
+            return;                                        // caso base: encontrado
+        }
+        caminoBusqueda(codigo < actual ? nodo.getIzquierdo() : nodo.getDerecho(), codigo, camino);
+    }
+
+    /** Verifica todo el ABB con limites minimo y maximo (no solo contra los hijos directos). */
+    public boolean esABBValido() {
+        return esABBValido(raiz, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean esABBValido(NodoLibro nodo, long minimo, long maximo) {
+        if (nodo == null) {
+            return true;                                   // caso base: arbol vacio es valido
+        }
+        int codigo = nodo.getDato().getCodigo();
+        if (codigo <= minimo || codigo >= maximo) {
+            return false;
+        }
+        return esABBValido(nodo.getIzquierdo(), minimo, codigo)
+                && esABBValido(nodo.getDerecho(), codigo, maximo);
+    }
+
+    // =================================================================== EXTRA
+
+    /** Reconstruye el ABB a partir de su preorden, sin insertar uno por uno. O(N). */
+    public static CatalogoABB desdePreorden(int[] preorden) {
+        CatalogoABB catalogo = new CatalogoABB();
+        if (preorden != null) {
+            int[] indice = {0};
+            catalogo.raiz = construir(preorden, indice, Long.MIN_VALUE, Long.MAX_VALUE);
+        }
+        return catalogo;
+    }
+
+    private static NodoLibro construir(int[] preorden, int[] indice, long minimo, long maximo) {
+        if (indice[0] >= preorden.length) {
+            return null;                                   // caso base: no quedan codigos
+        }
+        int codigo = preorden[indice[0]];
+        if (codigo <= minimo || codigo >= maximo) {
+            return null;                                   // no pertenece a este subarbol
+        }
+        indice[0]++;
+        NodoLibro nodo = new NodoLibro(new Libro(codigo, "Libro " + codigo, "Reconstruido", Libro.ANIO_MAXIMO));
+        nodo.setIzquierdo(construir(preorden, indice, minimo, codigo));
+        nodo.setDerecho(construir(preorden, indice, codigo, maximo));
+        return nodo;
     }
 }
